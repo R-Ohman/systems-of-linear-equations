@@ -2,7 +2,6 @@ from typing import Union
 
 
 class Matrix:
-
     def __init__(self, matrix: list[list[int]]):
         """
         Initialize the matrix.
