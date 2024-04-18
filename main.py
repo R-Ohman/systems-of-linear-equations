@@ -55,9 +55,21 @@ def analyze_convergence():
     plot(range(iter), err, "Gauss-Seidel method", "Iterations", "Residual error")
 
 
+def analyze_factorization():
+    N = 934
+    sm = create_system_matrix(a1=3, a2=-1, a3=-1, size=N)
+    b = [sin(n * 7) for n in range(N)]
+
+    time = datetime.now()
+    solution_vector, err = solve_factorization_lu(a=Matrix(sm), b=Matrix.from_list(b))
+    print("Factorization LU method: ", (datetime.now() - time).total_seconds(), "s")
+    print("Residual error: ", err)
+
+
 def main():
     # analyze_iteration_methods()
-    analyze_convergence()
+    # analyze_convergence()
+    analyze_factorization()
 
 
 if __name__ == '__main__':

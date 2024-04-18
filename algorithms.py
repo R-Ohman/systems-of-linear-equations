@@ -2,6 +2,35 @@ from typing import Callable
 from matrix import Matrix
 
 
+def solve_factorization_lu(a: 'Matrix', b: 'Matrix') -> ('Matrix', float):
+    """
+    Solve the system of linear equations Ax = b using the LU factorization method.
+    :param a: system matrix
+    :param b: right side of the equation
+    :return: solution vector, residual error
+    """
+    n = a.rows
+    l = Matrix.create_matrix(n, n)
+    u = Matrix.create_matrix(n, n)
+
+    for i in range(n):
+        for j in range(i, n):
+            u[i][j] = a[i][j] - sum(l[i][k] * u[k][j] for k in range(i))
+        for j in range(i + 1, n):
+            l[j][i] = (a[j][i] - sum(l[j][k] * u[k][i] for k in range(i))) / u[i][i]
+
+    y = Matrix.create_matrix(n, 1)
+    for i in range(n):
+        y[i][0] = b[i][0] - sum(l[i][j] * y[j][0] for j in range(i))
+
+    x = Matrix.create_matrix(n, 1)
+    for i in range(n - 1, -1, -1):
+        x[i][0] = (y[i][0] - sum(u[i][j] * x[j][0] for j in range(i + 1, n))) / u[i][i]
+
+    residuum = (a * x - b).norm()
+    return x, residuum
+
+
 def solve_jacobi(a: 'Matrix', b: 'Matrix', residuum: float = 1e-6) -> (int, list[float]):
     """
     Solve the system of linear equations Ax = b using the Jacobi method.
