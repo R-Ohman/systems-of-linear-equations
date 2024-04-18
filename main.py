@@ -43,8 +43,21 @@ def analyze_iteration_methods():
     plot(range(iter), err, "Gauss-Seidel method", "Iterations", "Residual error")
 
 
+def analyze_convergence():
+    N = 934
+    sm = create_system_matrix(a1=3, a2=-1, a3=-1, size=N)
+    b = [sin(n * 7) for n in range(N)]
+
+    iter, err = solve_jacobi(a=Matrix(sm), b=Matrix.from_list(b), residuum=1e-9)
+    plot(range(iter), err, "Jacobi method", "Iterations", "Residual error")
+
+    iter, err = solve_gauss_seidel(a=Matrix(sm), b=Matrix.from_list(b), residuum=1e-9)
+    plot(range(iter), err, "Gauss-Seidel method", "Iterations", "Residual error")
+
+
 def main():
-    analyze_iteration_methods()
+    # analyze_iteration_methods()
+    analyze_convergence()
 
 
 if __name__ == '__main__':
