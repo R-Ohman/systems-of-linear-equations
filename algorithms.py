@@ -54,14 +54,13 @@ def solve_gauss_seidel(a: 'Matrix', b: 'Matrix', residuum: float = 1e-6) -> (int
 
 
 def solve_linear_system(a: 'Matrix', b: 'Matrix', method: Callable[[list['Matrix'], int], float],
-                        residuum: float = 1e-6, max_err: float = 1e9) -> (int, list[float]):
+                        residuum: float = 1e-6) -> (int, list[float]):
     """
     Solve the system of linear equations Ax = b using the specified method.
     :param a: system matrix
     :param b: right side of the equation
     :param method: method to use for solving the system (e.g., jacobi_method, gauss_seidel_method)
     :param residuum: value to stop the iterations
-    :param max_err: maximum error value to stop the iterations
     :return: number of iterations, residual vector
     """
     x = Matrix.create_matrix(a.rows, 1)
@@ -78,7 +77,7 @@ def solve_linear_system(a: 'Matrix', b: 'Matrix', method: Callable[[list['Matrix
         err.append(new_err)
         x = x_new
 
-        if new_err > max_err:
+        if new_err > 1/residuum:
             break
 
     return iterations, err[1:]
