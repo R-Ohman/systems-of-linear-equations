@@ -32,7 +32,6 @@
 )
 
 #let creationDate = datetime.today()
-
 #align(right)[
     #stack(
       image("images/pg.jpg", width: 15%)
@@ -51,27 +50,25 @@
   )
 ]
 
-#v(10pt)
+#v(40pt)
 
 #outline(
   title: "Spis treści",
 )
 
-#v(10pt)
+#v(30pt)
 
 = Wstęp
 
-Projekt ma na celu zaimplementowanie oraz porównanie różnych iteracyjnych metod rozwiązywania układów równań liniowych oraz metody faktoryzacji LU. 
+Projekt ma na celu zaimplementowanie oraz porównanie dwóch iteracyjnych metod rozwiązywania układów równań liniowych (Jacobiego i Gaussa-Seidela) oraz metody faktoryzacji LU. 
   
-W ramach projektu zostały zaimplementowane metody Jacobiego i Gaussa-Seidela, a także metoda faktoryzacji LU bez korzystania z zewnętrznych bibliotek do obliczeń macierzowych.
-  
-Następnie przeprowadzono testy wydajnościowe, które umożliwiły porównanie czasu potrzebnego do rozwiązania układów równań liniowych w zależności od zastosowanej metody i rozmiaru danych.
-
 Do realizacji tego zadania użyto języka programowania Python oraz biblioteki Matplotlib do wizualizacji wyników. Wszystkie operacje na macierzach wykonano przy użyciu własnoręcznie napisanej klasy `Matrix`.
 
 Zgodnie z treścią #underline[Zadania A] na początku projektu utworzono układ równań liniowych reprezentowany przez macierze $A$ i $B$. 
 
-Macierz $A$ jest kwadratową macierzą pasmową o wymiarach $N #sym.times N$ dla $N = 9 c d = 934$, gdzie $a_1 = 5 + 6 = 11$, $a_2 = a_3 = -1$. $a_1$ to główna przekątna, $a_2$ to przekątne przesunięte o 1 względem głównej przekątnej itd. Dodatkowo, mamy wektor $B$ o długości $N$, którego $n$-ty element jest równy $sin(n #sym.dot (f + 1)) = sin(7n)$
+Macierz $A$ jest macierzą systemową o wymiarach $N #sym.times N$ dla $N = 9 c d = 934$, gdzie główna przekątna ($a_1$) przyjmuje wartości $11$, a dwie przesunięte przekątnę ($a_2$ i $a_3$) przyjmują wartości _-1_. Dodatkowo, mamy wektor pobudzenia $B$ o długości $N$, którego $n$-ty element jest równy $sin(7n)$.
+
+#v(25pt)
 
 $ A = mat(11, -1, -1, 0, dots.h, 0, 0, 0, 0;
         -1, 11, -1, -1, dots.h, 0, 0, 0, 0;
@@ -94,13 +91,16 @@ $ A = mat(11, -1, -1, 0, dots.h, 0, 0, 0, 0;
           0.3627;
           -0.3388;
           ) $
+          
+#align(center)[Pierwszy uklad równań liniowych]
 
 #pagebreak()
 
-= Porównanie metod rozwiązywania układów równań liniowych dla domyślnego układu równań
+= Rozwiązywanie domyślnego układu równań liniowych
 
 W ramach #underline[Zadania B] zaimplementowano metody Jacobiego i Gaussa-Seidela, które zostały wykorzystane do rozwiązania układu równań liniowych opisanego we wstępie tego sprawozdania.
 
+#v(10pt)
 #figure(
   table(
     columns: (1fr, 1fr, 1fr, 1.2fr),
@@ -114,9 +114,9 @@ W ramach #underline[Zadania B] zaimplementowano metody Jacobiego i Gaussa-Seidel
     text[Gauss-Seidel], text[14], text[5.497], text[1.905168171052384#sym.times$10^(-10)$],
     text[Faktoryzacja LU], text[-], text[59.82], text[3.4073565309548815#sym.times$10^(-15)$]
   ),
-  caption: [Porównanie metod Jacobiego, Gaussa-Seidela i faktoryzacji LU dla domyślnego układu równań]
+  caption: [Porównanie metod Jacobiego, Gaussa-Seidela i faktoryzacji LU dla pierwszego układu równań]
 )
-
+#v(10pt)
 Dla przedstawionego układu równań liniowych metoda Jacobiego wymagała 17 iteracji, podczas gdy metoda Gaussa-Seidela tylko 14 iteracji. Wyniki te wskazują, że metoda Gaussa-Seidela jest szybsza od metody Jacobiego (5.497 s vs 6.463 s). Z wykresu widać, że po szóstej iteracji spadek błędu obliczeniowego dla metody Jacobiego spowalnia w porównaniu z metodą Gaussa-Seidela.
 
 <TaskB>
@@ -124,10 +124,12 @@ Dla przedstawionego układu równań liniowych metoda Jacobiego wymagała 17 ite
   image("images/chart1_1.png"),
   caption: [Porównanie normy residuum w zależności od iteracji dla metod Jacobiego i Gaussa-Seidela]
 )
+#v(40pt)
+= Rozwiązywanie alternatywnego układu równań liniowych
 
-= Porównanie metod rozwiązywania układów równań liniowych dla alternatywnego układu równań
+W ramach #underline[Zadania C] i #underline[Zadania D] wygenerowano alternatywny układ równań liniowych, który różni się od domyślnego układu równań liniowych opisanego we wstępie jedynie wartościami elementów macierzy systemowej $A$. Jedyną zmianą było ustawienie wartości głównej przekątnej na $a_1 = 3$. Wektor pobudzenia $B$ pozostaje bez zmian.
 
-W ramach #underline[Zadania C] i #underline[Zadania D] wygenerowano alternatywny układ równań liniowych, który różni się od domyślnego układu równań liniowych opisanego we wstępie jedynie wartościami elementów macierzy $A$. Jedyną zmianą było ustawienie wartości głównej przekątnej na $a_1 = 3$.
+#pagebreak()
 
 $ A = mat(3, -1, -1, 0, dots.h, 0, 0, 0, 0;
       -1, 3, -1, -1, dots.h, 0, 0, 0, 0;
@@ -150,21 +152,23 @@ $ A = mat(3, -1, -1, 0, dots.h, 0, 0, 0, 0;
           0.3627;
           -0.3388;
           ) $
+#align(center)[Drugi uklad równań liniowych]
 
 <TaskC>
 #figure(
   image("images/chart2_1.png"),
-  caption: [Porównanie normy residuum w zależności od iteracji dla metod Jacobiego i Gaussa-Seidela dla alternatywnego układu równań]
+  caption: [Porównanie normy residuum w zależności od iteracji dla metod Jacobiego i Gaussa-Seidela dla drugiego układu równań]
 )
 
-Niestety, dla alternatywnego układu równań liniowych ani metoda Jacobiego, ani metoda Gaussa-Seidela nie były w stanie znaleźć poprawnego rozwiązania. Błąd obliczeń dla obu metod wzrastał już od pierwszych iteracji, osiągając normę residuum na poziomie $10^(0)$ do $10^(1)$, co wskazuje na to, że metody te nie są zbieżne dla tego układu równań. Szczególnie w przypadku metody Gaussa-Seidela błąd wzrastał znacznie szybciej, co można zaobserwować na wykresie normy residuum w zależności od iteracji.
+Jak widać z wykresu, dla alternatywnego układu równań liniowych ani metoda Jacobiego, ani metoda Gaussa-Seidela nie były w stanie znaleźć poprawnego rozwiązania. Błąd obliczeń dla obu metod wzrastał już od pierwszych iteracji, osiągając minimalną normę residuum na poziomie $10^(0)$ do $10^(1)$, co wskazuje na to, że metody te nie są zbieżne dla tego układu równań. Szczególnie w przypadku metody Gaussa-Seidela błąd 
+ znowu osiągnął wartość graniczną szybciej, niż w metodzie Jacobiego.
 
 <TaskD>
-W Zadaniu D, dla metody faktoryzacji LU, błąd obliczeń wyniósł $1.954704687433127$#sym.times$10^(-12)$, co wskazuje na bardzo wysoką dokładność tej metody dla tego układu równań, chociaż kosztem czasu obliczeń.
+W #underline[Zadaniu D], dla metody faktoryzacji LU, błąd obliczeń wyniósł $1.954704687433127$#sym.times$10^(-12)$, co wskazuje na bardzo wysoką dokładność tej metody dla tego układu równań, chociaż kosztem czasu obliczeń (58.93s).
 
 //#pagebreak()
-
-= Czas obliczeń w zależności od rozmiaru macierzy
+#v(10pt)
+= Zależność czasu obliczeń od rozmiaru macierzy
 
 W ramach #underline[Zadania E] przeprowadzono testy wydajnościowe dla metod Jacobiego, Gaussa-Seidela i faktoryzacji LU dla układów równań liniowych o różnych rozmiarach.
 
@@ -176,15 +180,14 @@ Testy wydajnościowe przeprowadzono dla macierzy kwadratowych o rozmiarach $N = 
   caption: [Porównanie czasu obliczeń w zależności od rozmiaru macierzy dla metod Jacobiego, Gaussa-Seidela i faktoryzacji LU]
 ) 
 
-Na wykresie czasu obliczeń w zależności od rozmiaru macierzy dla metod Jacobiego, Gaussa-Seidela i faktoryzacji LU można zauważyć, że metoda faktoryzacji LU jest zdecydowanie wolniejsza od metod iteracyjnych, co staje się szczególnie zauważalne dla dużych macierzy. Metoda Gaussa-Seidela jest trochę szybsza od metody Jacobiego dla wszystkich rozmiarów macierzy.
+Z wykresu widać, że metoda faktoryzacji LU jest znacznie wolniejsza od metod iteracyjnych, co staje się szczególnie zauważalne dla dużych macierzy. Metoda Gaussa-Seidela jest trochę szybsza od metody Jacobiego dla wszystkich badanych rozmiarów macierzy.
 
+#v(20pt)
 = Podsumowanie
 
 
 W ramach projektu zaimplementowano metody Jacobiego i Gaussa-Seidela oraz metodę faktoryzacji LU. Przeprowadzone testy wydajnościowe pozwoliły na porównanie czasu obliczeń rozwiązań układów równań liniowych w zależności od zastosowanej metody oraz rozmiaru macierzy.
 
-Podczas testów wydajnościowych zauważono, że metoda faktoryzacji LU jest znacznie wolniejsza od metod iteracyjnych (nawet 20 razy wolniejsza w przypadku macierzy $2000 #sym.times 2000$), co jest szczególnie istotne dla dużych macierzy. Metoda Gaussa-Seidela okazała się szybsza od metody Jacobiego dla wszystkich rozmiarów macierzy. Pomimo to, metoda faktoryzacji LU była najdokładniejsza, co można zaobserwować na przykładzie alternatywnego układu równań liniowych, który nie zbiegał dla metod iteracyjnych.
+Podczas testów wydajnościowych zauważono, że metoda faktoryzacji LU jest znacznie wolniejsza od metod iteracyjnych (nawet 20 razy wolniejsza w przypadku macierzy $2000 #sym.times 2000$), co wynika ze złożoności obliczeniowej ($O(n^3)$ vs $O(n^2)$). Metoda Gaussa-Seidela okazała się o kilkanaście procent szybsza od metody Jacobiego. Pomimo to, metoda faktoryzacji LU była najdokładniejsza, co można zaobserwować na przykładzie alternatywnego układu równań liniowych, który się nie zbiegał dla metod iteracyjnych.
 
-Wnioskiem ogólnym jest to, że przy rozwiązywaniu różnych klas układów równań liniowych zaleca się rozpoczęcie od metody Gaussa-Seidela, a w przypadku braku zbieżności (co można stwierdzić, zauważając, że błąd zamiast maleć przy kolejnych iteracjach wzrasta) można przejść do metody faktoryzacji LU. Takie podejście pozwala uzyskać dokładne wyniki w krótszym czasie, pod warunkiem, że układ równań jest zbieżny, oraz umożliwia uzyskanie wyników dla układów równań, które nie zbiegają dla metod iteracyjnych.
-
-Dodatkowo, należy zauważyć, że zastosowanie zewnętrznych bibliotek do obliczeń macierzowych (np. NumPy) lub wykorzystanie szybszego języka do implementacji może znacząco przyspieszyć obliczenia, szczególnie istotne dla dużych macierzy. Testowana implementacja została napisana w czystym języku Python, który nie należy do szybkich języków, co znacząco wpłynęło na czas obliczeń, zwłaszcza dla metody faktoryzacji LU, która zajęła nawet 11 minut dla macierzy o rozmiarze $2000 #sym.times 2000$.
+W celu przyspieszenia obliczeń można zastosować hybrydowe metody rozwiązywania układów równań przy wykorzystaniu gotowych narzędzi i szybszego języka programowania. Na przykład, można rozpocząć od metody Gaussa-Seidela, a w przypadku braku zbieżności (co można stwierdzić, zauważając, że błąd zamiast maleć przy kolejnych iteracjach wzrasta) można przejść do metody faktoryzacji LU. Takie podejście pozwala uzyskać dokładne wyniki dla układów równań, które nie zbiegają dla metod iteracyjnych. Dodatkowo, należy korzystać z zewnętrznych bibliotek do obliczeń macierzowych (np. NumPy) lub wykorzystać inny, szybszy od Pythona, język programowania.
